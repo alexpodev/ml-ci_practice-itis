@@ -130,4 +130,5 @@ jobs:
           yc serverless container revision deploy \
             --container-id ${{ secrets.YC_CONTAINER_ID }} \
             --image cr.yandex/${{ secrets.YC_REGISTRY_ID }}/${{ secrets.YC_IMAGE_NAME }}:latest \
+            --service-account-id ${{ secrets.YC_RUNTIME_SA_ID }} \
             --cores 1 --memory 512M --execution-timeout 30s 
