@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+jupyter
+pytest
+flake8
+joblib
+fastapi
+uvicorn[standard]
+catboost
