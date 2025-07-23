@@ -78,10 +78,15 @@ jobs:
         with:
           name: docker-image
 
+      - name: Debug secrets
+        run: |
+          echo "Registry ID: ${{ secrets.YC_REGISTRY_ID }}"
+          echo "Image Name: ${{ secrets.YC_IMAGE_NAME }}"
+
       - name: Load Docker image
         run: |
           docker load -i image.tar
-          docker tag heart-disease:ci cr.yandex/${{ secrets.CYC_REGISTRY_ID }}/${{ secrets.YC_IMAGE_NAME }}:latest
+          docker tag heart-disease:ci cr.yandex/${{ secrets.YC_REGISTRY_ID }}/${{ secrets.YC_IMAGE_NAME }}:latest
 
       - name: Install Yandex Cloud CLI
         run: |
