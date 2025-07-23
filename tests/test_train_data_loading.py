@@ -1,4 +1,7 @@
-from src.data_loader import load_sample_data
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+from data_loader import load_sample_data
 
 DATA_PATH = 'data/heart_disease_uci.csv'
 
