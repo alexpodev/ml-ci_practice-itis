@@ -51,11 +51,12 @@ def impute_categorical_missing_data(df, passed_col, missing_data_cols, bool_cols
             imputed_values = iterative_imputer.fit_transform(col_with_missing_values)
             X_null[col] = imputed_values[:, 0]
     if len(df_null) > 0:
+        df_null = df_null.copy()
         pred = rf_classifier.predict(X_null)
         if passed_col in bool_cols:
-            df_null[passed_col] = pred.astype(bool)
+            df_null.loc[:, passed_col] = pred.astype(bool)
         else:
-            df_null[passed_col] = pred
+            df_null.loc[:, passed_col] = pred
     df_combined = pd.concat([df_not_null, df_null])
     return df_combined[passed_col]
 
@@ -93,7 +94,8 @@ def impute_continuous_missing_data(df, passed_col, missing_data_cols):
             imputed_values = iterative_imputer.fit_transform(col_with_missing_values)
             X_null[col] = imputed_values[:, 0]
     if len(df_null) > 0:
-        df_null[passed_col] = rf_regressor.predict(X_null)
+        df_null = df_null.copy()
+        df_null.loc[:, passed_col] = rf_regressor.predict(X_null)
     df_combined = pd.concat([df_not_null, df_null])
     return df_combined[passed_col]
 
@@ -130,7 +132,7 @@ def preprocess_data(df: pd.DataFrame, for_catboost=True):
             df[col] = df[col].astype(bool)
     # Удаляем неиспользуемые
     df.drop(columns=['id'], inplace=True, errors='ignore')
-    # Не делаем one-hot для catboost
+    
     # Целевая переменная
     if 'num' in df.columns:
         y = df['num']
